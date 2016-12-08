@@ -1,0 +1,81 @@
+{
+  "_args": [
+    [
+      "angular-medium-editor@git+https://github.com/joliveros/angular-medium-editor.git#master",
+      "/home/sam/projects/swish/admin-frontend"
+    ]
+  ],
+  "_from": "git+https://github.com/joliveros/angular-medium-editor.git#master",
+  "_id": "angular-medium-editor@1.1.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/angular-medium-editor",
+  "_phantomChildren": {},
+  "_requested": {
+    "hosted": {
+      "directUrl": "https://raw.githubusercontent.com/joliveros/angular-medium-editor/master/package.json",
+      "gitUrl": "git://github.com/joliveros/angular-medium-editor.git#master",
+      "httpsUrl": "git+https://github.com/joliveros/angular-medium-editor.git#master",
+      "shortcut": "github:joliveros/angular-medium-editor#master",
+      "ssh": "git@github.com:joliveros/angular-medium-editor.git#master",
+      "sshUrl": "git+ssh://git@github.com/joliveros/angular-medium-editor.git#master",
+      "type": "github"
+    },
+    "name": "angular-medium-editor",
+    "raw": "angular-medium-editor@git+https://github.com/joliveros/angular-medium-editor.git#master",
+    "rawSpec": "git+https://github.com/joliveros/angular-medium-editor.git#master",
+    "scope": null,
+    "spec": "git+https://github.com/joliveros/angular-medium-editor.git#master",
+    "type": "hosted"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git+https://github.com/joliveros/angular-medium-editor.git#3a47ed48889254304041146e0a86f333b5ab0e07",
+  "_shasum": "3e5c2dff0a6f22d1a630c4023f2d9473d94dbee6",
+  "_shrinkwrap": null,
+  "_spec": "angular-medium-editor@git+https://github.com/joliveros/angular-medium-editor.git#master",
+  "_where": "/home/sam/projects/swish/admin-frontend",
+  "author": {
+    "email": "thijs@wijnmaalen.name",
+    "name": "Thijs Wijnmaalen",
+    "url": "https://twitter.com/thijsw"
+  },
+  "bugs": {
+    "url": "https://github.com/thijsw/angular-medium-editor/issues"
+  },
+  "dependencies": {},
+  "description": "AngularJS directive for Medium.com editor clone",
+  "devDependencies": {
+    "connect-livereload": "^0.4.0",
+    "grunt": "^0.4.5",
+    "grunt-bump": "0.0.16",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-connect": "^0.8.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-less": "^0.11.4",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-ng-annotate": "0.4.0",
+    "grunt-open": "^0.2.3",
+    "load-grunt-tasks": "^2.0.0"
+  },
+  "gitHead": "3a47ed48889254304041146e0a86f333b5ab0e07",
+  "homepage": "https://github.com/thijsw/angular-medium-editor",
+  "keywords": [
+    "angular",
+    "medium-editor"
+  ],
+  "license": "MIT",
+  "main": "./dist/angular-medium-editor.js",
+  "name": "angular-medium-editor",
+  "optionalDependencies": {},
+  "readme": "# angular-medium-editor\nThis is an AngularJS directive for the [Medium.com inline editor clone](https://github.com/yabwe/medium-editor) by Davi Ferreira.\n\n## Install\n\nInstall with [Bower](https://bower.io/):\n```sh\n$ bower install --save angular-medium-editor\n```\n\nThen add `<script>` to your `index.html`:\n\n```html\n<script src=\"/bower_components/angular-medium-editor/dist/angular-medium-editor.js\"></script>\n```\n\nRemember to include Angular and [Medium editor](https://github.com/yabwe/medium-editor) before the directive.\n\nThen add `angular-medium-editor` as a dependency for your app:\n\n```javascript\nangular.module('myApp', ['angular-medium-editor']);\n```\n\n## Documentation\n\nUse as an element:\n```html\n<medium-editor></medium-editor>\n```\n\n...or attribute:\n```html\n<p medium-editor></p>\n```\n\nPass options with `bind-options` attribute:\n```html\n<p medium-editor bind-options=\"options\"></p>\n```\n\nSee MediumEditor's [options documentation](https://github.com/yabwe/medium-editor#mediumeditor-options) for details.\n\n## Examples\n\n#### Single line, no toolbar\nHeader example limited to one line and no toolbar\n```html\n<h1 ng-model=\"title\" medium-editor bind-options=\"{disableReturn: true, disableExtraSpaces: true, toolbar: false}\" data-placeholder=\"Enter a title\"></h1>\n```\n\n#### Multiline with custom toolbar\nParagraph with support for multiple lines and customized toolbar buttons\n```html\n<p ng-model=\"description\" medium-editor bind-options=\"{'toolbar': {'buttons': ['bold', 'italic', 'underline']}}\" data-placeholder=\"Enter a description\"></p>\n```\n\n#### Custom extension\nExample for extending the toolbar with customized element `highlighter` (using [rangy](https://github.com/timdown/rangy) and the [CSS Class Applier Module](https://code.google.com/p/rangy/wiki/CSSClassApplierModule) to support highlighting of text). For more detailed info on extensions, please refer to [MediumEditor](https://github.com/yabwe/medium-editor).\n```html\n<p ng-model=\"text\" medium-editor bind-options=\"mediumBindOptions\"></p>\n```\n```javascript\nfunction Highlighter() {\n  this.button = document.createElement('button');\n  this.button.className = 'medium-editor-action';\n  this.button.innerText = 'H';\n  this.button.onclick = this.onClick.bind(this);\n  this.classApplier = rangy.createCssClassApplier('highlight', {\n    elementTagName: 'mark',\n    normalize: true\n  });\n}\nHighlighter.prototype.onClick = function() {\n  this.classApplier.toggleSelection();\n};\nHighlighter.prototype.getButton = function() {\n  return this.button;\n};\nHighlighter.prototype.checkState = function(node) {\n  if (node.tagName == 'MARK') {\n    this.button.classList.add('medium-editor-button-active');\n  }\n};\n\nscope.mediumBindOptions = {\n  toolbar: {\n    buttons: ['bold', 'italic', 'highlight']\n  },\n  extensions: {\n    highlight: new Highlighter()\n  }\n};\n```\n\n## Running the demo\nIf you want to view the included demo, you have to run `bower` first in order to retrieve the dependencies.\n\n## License\nThe MIT License\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thijsw/angular-medium-editor.git"
+  },
+  "version": "1.1.1"
+}
